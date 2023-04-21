@@ -4,9 +4,7 @@
   <h3><%= link_to discount.name,  merchant_bulk_discount_path(@merchant, discount)%></h3>
   <ul>
     <li><%= "Item threshold: #{discount.threshold}" %>
-    <li><%= "Percent off: #{discount.discount}" %>
+    <li><%= "Percent off: #{discount.discount}" %>    0
   </ul>
-    <%= form_with url: "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete, local: true do |form| %>
-      <p><%= form.submit "Delete", id: "delete#{discount.id}" %></p>
-    <% end %>
+  <%= button_to "Delete", merchant_bulk_discount_path(@merchant, discount), method: :delete %>
 <% end %>
