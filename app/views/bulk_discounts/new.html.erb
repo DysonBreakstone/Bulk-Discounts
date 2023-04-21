@@ -1,0 +1,10 @@
+<h2>Enter Discount Information</h2>
+<%= form_with model: @bulk_discount, url: "/merchant/#{@merchant.id}/bulk_discounts", method: :post, local: true do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %><br/>
+  <%= form.label :threshold %>
+  <%= form.number_field :threshold %><br/>
+  <%= form.label :discount %>
+  <%= form.number_field :discount %><br/>
+  <%= form.submit %>
+<% end %>

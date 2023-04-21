@@ -51,4 +51,16 @@ RSpec.describe "index page", type: :feature do
       expect(page).to have_link("Discount 4", href: merchant_bulk_discount_path(@merchant_2, @bulk_discount_4))
     end
   end
+
+  describe "user story 2 - create" do
+    before do
+      test_data
+    end
+    
+    it "has a link to new bulk discount page" do
+      visit merchant_bulk_discounts_path(@merchant_2)
+
+      expect(page).to have_link("Create New Discount", href: new_merchant_bulk_discount_path(@merchant_2))
+    end
+  end
 end
