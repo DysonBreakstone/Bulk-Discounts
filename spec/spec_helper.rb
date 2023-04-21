@@ -13,6 +13,63 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+def test_data
+  @merchant_1 = FactoryBot.create(:merchant)
+  @merchant_2 = FactoryBot.create(:merchant)
+  @item_1 = @merchant_1.items.create!(name: 'Item 1', description: 'Description 1', unit_price: 100)
+  @item_2 = @merchant_1.items.create!(name: 'Item 2', description: 'Description 2', unit_price: 200)
+  @item_3 = @merchant_1.items.create!(name: 'Item 3', description: 'Description 3', unit_price: 300)
+  @item_4 = @merchant_1.items.create!(name: 'Item 4', description: 'Description 4', unit_price: 400)
+  @item_5 = @merchant_1.items.create!(name: 'Item 5', description: 'Description 5', unit_price: 500)
+  @item_6 = @merchant_1.items.create!(name: 'Item 6', description: 'Description 6', unit_price: 600)
+  @item_7 = @merchant_1.items.create!(name: 'Item 7', description: 'Description 7', unit_price: 700)
+  @item_8 = @merchant_2.items.create!(name: 'Item 8', description: 'Description 8', unit_price: 800)
+  @item_9 = @merchant_2.items.create!(name: 'Item 9', description: 'Description 9', unit_price: 900)
+  @item_10 = @merchant_2.items.create!(name: 'Item 10', description: 'Description 10', unit_price: 1000)
+  @item_11 = @merchant_2.items.create!(name: 'Item 11', description: 'Description 11', unit_price: 1100)
+  @item_12 = @merchant_2.items.create!(name: 'Item 12', description: 'Description 12', unit_price: 1200)
+  @item_13 = @merchant_2.items.create!(name: 'Item 13', description: 'Description 13', unit_price: 1300)
+  @item_14 = @merchant_2.items.create!(name: 'Item 14', description: 'Description 14', unit_price: 1400)
+  @item_15 = @merchant_3.items.create!(name: 'Item 15', description: 'Description 15', unit_price: 1500)
+  @item_16 = @merchant_3.items.create!(name: 'Item 16', description: 'Description 16', unit_price: 1600)
+  @item_17 = @merchant_3.items.create!(name: 'Item 17', description: 'Description 17', unit_price: 1700)
+  @item_18 = @merchant_3.items.create!(name: 'Item 18', description: 'Description 18', unit_price: 1800)
+  @item_19 = @merchant_3.items.create!(name: 'Item 19', description: 'Description 19', unit_price: 1900)
+  @item_20 = @merchant_3.items.create!(name: 'Item 20', description: 'Description 20', unit_price: 2000)
+  @customer_1 = Customer.create!(first_name: 'Customer', last_name: 'One')
+  @customer_2 = Customer.create!(first_name: 'Customer', last_name: 'Two')
+  @invoice_1 = @customer_1.invoices.create!(status: 1)
+  @invoice_2 = @customer_2.invoices.create!(status: 1)
+  @invoice_3 = @customer_1.invoices.create!(status: 1)
+  @invoice_4 = @customer_2.invoices.create!(status: 1)
+  @invoice_item_1 = @invoice_1.invoice_items.create!(item: @item_1, quantity: 1, unit_price: 100, status: 1)
+  @invoice_item_2 = @invoice_1.invoice_items.create!(item: @item_2, quantity: 2, unit_price: 200, status: 1)
+  @invoice_item_3 = @invoice_1.invoice_items.create!(item: @item_3, quantity: 3, unit_price: 300, status: 1)
+  @invoice_item_4 = @invoice_1.invoice_items.create!(item: @item_4, quantity: 4, unit_price: 400, status: 1)
+  @invoice_item_5 = @invoice_1.invoice_items.create!(item: @item_5, quantity: 5, unit_price: 500, status: 1)
+  @invoice_item_6 = @invoice_2.invoice_items.create!(item: @item_6, quantity: 6, unit_price: 600, status: 1)
+  @invoice_item_7 = @invoice_2.invoice_items.create!(item: @item_7, quantity: 7, unit_price: 700, status: 1)
+  @invoice_item_8 = @invoice_2.invoice_items.create!(item: @item_8, quantity: 8, unit_price: 800, status: 1)
+  @invoice_item_9 = @invoice_2.invoice_items.create!(item: @item_9, quantity: 9, unit_price: 900, status: 1)
+  @invoice_item_10 = @invoice_2.invoice_items.create!(item: @item_10, quantity: 10, unit_price: 1000, status: 1)
+  @invoice_item_11 = @invoice_3.invoice_items.create!(item: @item_11, quantity: 11, unit_price: 1100, status: 1)
+  @invoice_item_12 = @invoice_3.invoice_items.create!(item: @item_12, quantity: 12, unit_price: 1200, status: 1)
+  @invoice_item_13 = @invoice_3.invoice_items.create!(item: @item_13, quantity: 13, unit_price: 1300, status: 1)
+  @invoice_item_14 = @invoice_3.invoice_items.create!(item: @item_14, quantity: 14, unit_price: 1400, status: 1)
+  @invoice_item_15 = @invoice_3.invoice_items.create!(item: @item_15, quantity: 15, unit_price: 1500, status: 1)
+  @invoice_item_16 = @invoice_4.invoice_items.create!(item: @item_16, quantity: 16, unit_price: 1600, status: 1)
+  @invoice_item_17 = @invoice_4.invoice_items.create!(item: @item_17, quantity: 17, unit_price: 1700, status: 1)
+  @invoice_item_18 = @invoice_4.invoice_items.create!(item: @item_18, quantity: 18, unit_price: 1800, status: 1)
+  @invoice_item_19 = @invoice_4.invoice_items.create!(item: @item_19, quantity: 19, unit_price: 1900, status: 1)
+  @invoice_item_20 = @invoice_4.invoice_items.create!(item: @item_20, quantity: 20, unit_price: 2000, status: 1)
+  @transaction_1 = @invoice_1.transactions.create!(credit_card_number: 1, credit_card_expiration_date: 1, result: 1)
+  @transaction_2 = @invoice_2.transactions.create!(credit_card_number: 1, credit_card_expiration_date: 1, result: 1)
+  @transaction_3 = @invoice_3.transactions.create!(credit_card_number: 1, credit_card_expiration_date: 1, result: 1)
+  @transaction_4 = @invoice_4.transactions.create!(credit_card_number: 1, credit_card_expiration_date: 1, result: 1)
+end
+
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
