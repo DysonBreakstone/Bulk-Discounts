@@ -6,4 +6,7 @@
     <li><%= "Item threshold: #{discount.threshold}" %>
     <li><%= "Percent off: #{discount.discount}" %>
   </ul>
+    <%= form_with url: "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete, local: true do |form| %>
+      <p><%= form.submit "Delete", id: "delete#{discount.id}" %></p>
+    <% end %>
 <% end %>

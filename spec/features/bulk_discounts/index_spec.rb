@@ -63,4 +63,36 @@ RSpec.describe "index page", type: :feature do
       expect(page).to have_link("Create New Discount", href: new_merchant_bulk_discount_path(@merchant_2))
     end
   end
+
+  describe "user story 3 - delete" do
+    before do 
+      test_data
+      @bulk_discount_1 = @merchant_1.bulk_discounts.create!(name: "Discount 1", discount: 10, threshold: 5)
+      @bulk_discount_2 = @merchant_1.bulk_discounts.create!(name: "Discount 2", discount: 20, threshold: 10)
+      @bulk_discount_3 = @merchant_2.bulk_discounts.create!(name: "Discount 3", discount: 30, threshold: 15)
+      @bulk_discount_4 = @merchant_2.bulk_discounts.create!(name: "Discount 4", discount: 40, threshold: 20)
+    end
+
+    it "has delete links" do
+      visit merchant_bulk_discounts_path(@merchant_2)
+
+      expect(page.all(:button, "Delete").count).to eq(2)
+    end
+
+    it "deletes discounts" do
+      visit merchant_bulk_discounts_path(@merchant_2)
+      expect(page).to have_content("Discount 3")
+      expect(page).to have_content("Discount 4")
+
+      click_button("delete#{@bulk_discount_3.id}")
+
+      expect(page).to have_no_content("Discount 3")
+      expect(page).to have_content("Discount 4")
+
+      click_button("delete#{@bulk_discount_4.id}")
+
+      expect(page).to have_no_content("Discount 3")
+      expect(page).to have_no_content("Discount 4")
+    end
+  end
 end
