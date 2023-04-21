@@ -1,0 +1,2 @@
+<%= "Enter new information for for #{@bulk_discount.name}" %>
+<%= render partial: 'form', locals: { method: :patch, url: merchant_bulk_discount_path(@bulk_discount.merchant, @bulk_discount), local: true, model: @bulk_discount} %>
