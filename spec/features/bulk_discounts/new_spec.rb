@@ -16,7 +16,7 @@ RSpec.describe "new bulk_discount page", type: :feature do
     expect(page).to have_field("Name")
     expect(page).to have_field("Threshold")
     expect(page).to have_field("Discount")
-    expect(page).to have_button("Create BulkDiscount", href: "/merchant/#{@merchant_1.id}/bulk_discounts")
+    expect(page).to have_button("Create Bulk discount")
   end
 
   it "filling out form adds discount to index page" do
@@ -30,9 +30,10 @@ RSpec.describe "new bulk_discount page", type: :feature do
     fill_in "Name", with: "Discount 5"
     fill_in "Threshold", with: 25
     fill_in "Discount", with: 50
-    click_button "Create BulkDiscount"
+    click_button "Create Bulk discount"
 
-    expect(current_path).to eq(visit merchant_bulk_discounts_path(@merchant_1))
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+    expect(page).to have_content("New Discount Created!")
     expect(page).to have_content("Discount 5")
   end
 
@@ -45,7 +46,45 @@ RSpec.describe "new bulk_discount page", type: :feature do
       @bulk_discount_4 = @merchant_2.bulk_discounts.create!(name: "Discount 4", discount: 40, threshold: 20)
     end
 
-    it "enter no information"
+    it "enter no information" do
+      visit new_merchant_bulk_discount_path(@merchant_1)
+      click_button "Create Bulk discount"
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+      expect(page).to have_content("Please fill out all fields correctly")
+    end
+
+    it "enter only some information" do
+      visit new_merchant_bulk_discount_path(@merchant_1)
+
+      fill_in "Threshold", with: 25
+      fill_in "Discount", with: 50
+      click_button "Create Bulk discount"
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+      expect(page).to have_content("Please fill out all fields correctly")
+
+      fill_in "Name", with: "Discount 5"
+      fill_in "Threshold", with: 25
+      click_button "Create Bulk discount"
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+      expect(page).to have_content("Please fill out all fields correctly")
+    end
+
+    it "fill out information incorrectly" do
+      visit new_merchant_bulk_discount_path(@merchant_1)
+
+      fill_in "Name", with: "Discount 5"
+      fill_in "Threshold", with: "Twenty Five"
+      fill_in "Discount", with: "Fifty"
+      click_button "Create Bulk discount"
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+      expect(page).to have_content("Please fill out all fields correctly")
+    end
+
+
   end
 
 end
