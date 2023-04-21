@@ -11,6 +11,7 @@ RSpec.describe "new bulk_discount page", type: :feature do
 
   it "has fields to enter in bulk_discount information" do
     visit new_merchant_bulk_discount_path(@merchant_1)
+
     expect(page).to have_content("Enter Discount Information")
 
     expect(page).to have_field("Name")

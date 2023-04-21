@@ -81,6 +81,7 @@ RSpec.describe "index page", type: :feature do
 
     it "deletes discounts" do
       visit merchant_bulk_discounts_path(@merchant_2)
+   
       expect(page).to have_content("Discount 3")
       expect(page).to have_content("Discount 4")
 
