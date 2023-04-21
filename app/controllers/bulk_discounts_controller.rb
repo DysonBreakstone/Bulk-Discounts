@@ -26,7 +26,7 @@ class BulkDiscountsController < ApplicationController
   end
 
   def show
-    require 'pry'; binding.pry
+    @bulk_discount = BulkDiscount.find(params[:id])
   end
 
   private
