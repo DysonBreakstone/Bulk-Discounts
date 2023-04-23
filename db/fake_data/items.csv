@@ -9,3 +9,4 @@ id,name,description,unit_price,merchant_id,created_at,updated_at
 8,Item Eight,Description Eight,800,1,2012-03-27 14:53:59 UTC,2012-03-27 14:53:59 UTC
 9,Item Nine,Description Nine,900,1,2012-03-27 14:53:59 UTC,2012-03-27 14:53:59 UTC
 10,Item Ten,Description Ten,1000,1,2012-03-27 14:53:59 UTC,2012-03-27 14:53:59 UTC
+11,Item Eleven,Description Eleven,1100,2,2012-03-27 14:53:59 UTC,2012-03-27 14:53:59 UTC
