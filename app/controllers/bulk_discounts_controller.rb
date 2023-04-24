@@ -48,9 +48,3 @@ private
     params.require(:bulk_discount).permit(:name, :threshold, :discount)
   end
 end
-
-InvoiceItem.joins(invoice:  {merchants: :bulk_discounts}).select("invoice_items.id, invoice_items.quantity AS quantity, invoice_items.unit_price AS price, max(bulk_discounts.discount) AS discount").where("invoice_items.quantity >= bulk_discounts.threshold").distinct.order("invoice_items.id, discount").group("invoice_items.id")
-
-Invoice.joins(merchants: :bulk_discounts).where("invoices.id = 1").select("invoice_items.*, max(bulk_discounts.discount)").group("invoice_items.id").select("invoices.id, sum(invoice_items.quantity * invoice_items.unit_price * bulk_discounts.discount) AS total_price").group("invoices.id").first.total_price
-
-InvoiceItem.joins(invoice:  {merchants: :bulk_discounts}).where("invoice_items.quantity >= bulk_discounts.threshold AND invoices.id = 1 AND merchants.id = 1").select("invoice_items.id, invoice_items.quantity AS quantity, invoice_items.unit_price AS price, min(bulk_discounts.discount)").order("invoice_items.quantity").group("invoice_items.id")

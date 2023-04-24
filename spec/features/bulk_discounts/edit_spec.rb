@@ -15,7 +15,7 @@ RSpec.describe 'bulk discount edit page' do
 
       expect(page).to have_field("Name", with: "Discount 4")
       expect(page).to have_field("Threshold", with: 20)
-      expect(page).to have_field("Discount", with: 40)
+      expect(page).to have_field("Discount", with: 40.0)
     end
 
     it "updates" do
@@ -23,11 +23,11 @@ RSpec.describe 'bulk discount edit page' do
 
       expect(page).to have_content("Discount 4")
       expect(page).to have_content("Item threshold: 20")
-      expect(page).to have_content("Percent off: 40")
+      expect(page).to have_content("Percent off: 40.0")
 
       expect(page).to have_no_content("Wacky Discount")
       expect(page).to have_no_content("Item threshold: 25")
-      expect(page).to have_no_content("Percent off: 50")
+      expect(page).to have_no_content("Percent off: 50.0")
 
       click_link("Edit this discount")
 

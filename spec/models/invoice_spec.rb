@@ -24,4 +24,43 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.total_revenue).to eq(100)
     end
   end
+
+  describe "bulk discounts instance methods" do
+    before do
+      test_data
+      @bulk_discount_1 = @merchant_1.bulk_discounts.create!(name: "Discount 1", discount: 10, threshold: 5)
+      @bulk_discount_2 = @merchant_1.bulk_discounts.create!(name: "Discount 2", discount: 20, threshold: 10)
+      @bulk_discount_3 = @merchant_2.bulk_discounts.create!(name: "Discount 3", discount: 30, threshold: 15)
+      @bulk_discount_4 = @merchant_2.bulk_discounts.create!(name: "Discount 4", discount: 40, threshold: 20)
+    end
+
+    it "#total_merchant_discount" do
+      expect(@invoice_1.total_merchant_discount(@merchant_1)).to eq(250.0)
+      expect(@invoice_2.total_merchant_discount(@merchant_1)).to eq(4300.0)
+      expect(@invoice_4.total_merchant_discount(@merchant_2)).to eq(52900.0)
+      expect(@invoice_4.total_merchant_discount(@merchant_1)).to eq(nil)
+    end
+
+    it "#this_merchant" do
+      expect(@invoice_1.this_merchant(@merchant_1)).to eq([@invoice_item_1, @invoice_item_2, @invoice_item_3, @invoice_item_4, @invoice_item_5])
+
+      @invoice_item_21 = @invoice_1.invoice_items.create!(item: @item_20, quantity: 20, unit_price: 2000, status: 1)
+
+      expect(@invoice_1.this_merchant(@merchant_1)).to eq([@invoice_item_1, @invoice_item_2, @invoice_item_3, @invoice_item_4, @invoice_item_5])
+    end
+
+    it "#total_merchant_revenue" do
+      expect(@invoice_3.total_merchant_revenue(@merchant_1)).to eq(0)
+      expect(@invoice_3.total_merchant_revenue(@merchant_2)).to eq(85500.0)
+      
+      @invoice_item_21 = @invoice_3.invoice_items.create!(item: @item_1, quantity: 20, unit_price: 2000, status: 1)
+
+      expect(@invoice_3.total_merchant_revenue(@merchant_2)).to eq(85500.0)
+    end
+
+    it "#total_sum" do
+      expect(@invoice_1.total_sum(@merchant_1)).to eq(5250.0)
+      expect(@invoice_3.total_sum(@merchant_2)).to eq(78750.0)
+    end
+  end
 end
