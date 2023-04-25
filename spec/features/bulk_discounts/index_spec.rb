@@ -109,20 +109,21 @@ RSpec.describe "index page", type: :feature do
 
     it "displays next three holidays" do
       visit merchant_bulk_discounts_path(@merchant_2)
+      save_and_open_page
 
       within("#holidays") do
-        expect(page).to have_content("Upcoming holidays:")
-        within("holiday#{Holiday.first_three.first.id}") do
-          expect(page).to have_content("Memorial Day")
-          expect(page).to have_content("Mon, 29 May 2023")
+        expect(page).to have_content("Upcoming Holidays:")
+        within("#holiday#{Holiday.next_three.first.id}") do
+        expect(page).to have_content("Memorial Day")
+        expect(page).to have_content("Mon, 29 May 2023")
         end 
-        within("holiday#{Holiday.first_three.second.id}") do
-          expect(page).to have_content("Juneteenth")
-          expect(page).to have_content("Mon, 19 Jun 2023")
+        within("#holiday#{Holiday.next_three.second.id}") do
+        expect(page).to have_content("Juneteenth")
+        expect(page).to have_content("Mon, 19 Jun 2023")
         end
-        within("holiday#{Holiday.first_three.third.id}") do
-          expect(page).to have_content("Independence Day")
-          expect(page).to have_content("Tue, 04 Jul 2023")
+        within("#holiday#{Holiday.next_three.third.id}") do
+        expect(page).to have_content("Independence Day")
+        expect(page).to have_content("Tue, 04 Jul 2023")
         end
       end
     end
