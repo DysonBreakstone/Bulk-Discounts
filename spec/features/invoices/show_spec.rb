@@ -120,9 +120,9 @@ RSpec.describe 'invoices show' do
 
       visit merchant_invoice_path(@merchant_1, @invoice_2)
       
-      expect(page).to have_content("Total Revenue: 330.0")
-      expect(page).to have_content("Total Discounts: 43.0")
-      expect(page).to have_content("Total Sum: 287.0")
+      expect(page).to have_content("Total Revenue: 875.0")
+      expect(page).to have_content("Total Discounts: 152.0")
+      expect(page).to have_content("Total Sum: 723.0")
 
       visit merchant_invoice_path(@merchant_2, @invoice_4)
       

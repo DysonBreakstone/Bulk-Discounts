@@ -31,12 +31,39 @@ class Invoice < ApplicationRecord
   end
 
   def total_merchant_discount(merchant)
-    Merchant.from(merchant_discount_table(merchant), :discounts_table)
+    discount = Merchant.from(merchant_discount_table(merchant), :discounts_table)
       .select("sum(discounts_table.total_discount) AS total_discount_sum")
       .to_a.first.total_discount_sum
+    if !discount.nil?
+      return discount
+    else
+      return 0
+    end
   end
 
-  def total_sum(merchant)
+  def admin_discount_table
+    invoice_items.joins(:bulk_discounts)
+      .where("invoice_items.quantity >= bulk_discounts.threshold")
+      .select("MAX(invoice_items.quantity * invoice_items.unit_price *  (bulk_discounts.discount / 100)) AS total_discount, invoice_items.id")
+      .group("invoice_items.id")
+  end
+
+  def total_admin_discount
+    discount = Invoice.from(admin_discount_table, :discounts_table)
+      .select("SUM(discounts_table.total_discount) AS total_discount_sum")
+      .to_a.first.total_discount_sum
+    if !discount.nil?
+      return discount
+    else
+      return 0
+    end
+  end
+
+  def total_merchant_sum(merchant)
     total_merchant_revenue(merchant) - total_merchant_discount(merchant) 
+  end
+
+  def total_admin_sum
+    total_revenue - total_admin_discount 
   end
 end
