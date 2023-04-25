@@ -96,4 +96,36 @@ RSpec.describe "index page", type: :feature do
       expect(page).to have_no_content("Discount 4")
     end
   end
+
+  describe "holidays" do
+    before do
+      test_data
+      @bulk_discount_1 = @merchant_1.bulk_discounts.create!(name: "Discount 1", discount: 10, threshold: 5)
+      @bulk_discount_2 = @merchant_1.bulk_discounts.create!(name: "Discount 2", discount: 20, threshold: 10)
+      @bulk_discount_3 = @merchant_2.bulk_discounts.create!(name: "Discount 3", discount: 30, threshold: 15)
+      @bulk_discount_4 = @merchant_2.bulk_discounts.create!(name: "Discount 4", discount: 40, threshold: 20)
+      HolidayBuilder.make_holidays
+    end
+
+    it "displays next three holidays" do
+      visit merchant_bulk_discounts_path(@merchant_2)
+      save_and_open_page
+
+      within("#holidays") do
+        expect(page).to have_content("Upcoming Holidays:")
+        within("#holiday#{Holiday.next_three.first.id}") do
+        expect(page).to have_content("Memorial Day")
+        expect(page).to have_content("Mon, 29 May 2023")
+        end 
+        within("#holiday#{Holiday.next_three.second.id}") do
+        expect(page).to have_content("Juneteenth")
+        expect(page).to have_content("Mon, 19 Jun 2023")
+        end
+        within("#holiday#{Holiday.next_three.third.id}") do
+        expect(page).to have_content("Independence Day")
+        expect(page).to have_content("Tue, 04 Jul 2023")
+        end
+      end
+    end
+  end
 end
