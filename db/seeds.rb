@@ -1,9 +1,12 @@
+require './app/services/holiday_builder'
+
 InvoiceItem.destroy_all
 Transaction.destroy_all
 Invoice.destroy_all
 Item.destroy_all
 Customer.destroy_all
 Merchant.destroy_all
+Holiday.destroy_all
 
 @merchant_1 = Merchant.create!(name: "Merchant 1")
   @merchant_2 = Merchant.create!(name: "Merchant 2")
@@ -63,6 +66,8 @@ Merchant.destroy_all
   @transaction_3 = @invoice_3.transactions.create!(credit_card_number: 1, credit_card_expiration_date: 1, result: 1)
   @transaction_4 = @invoice_4.transactions.create!(credit_card_number: 1, credit_card_expiration_date: 1, result: 1)
   @bulk_discount_1 = @merchant_1.bulk_discounts.create!(name: "Discount 1", discount: 10, threshold: 5)
-      @bulk_discount_2 = @merchant_1.bulk_discounts.create!(name: "Discount 2", discount: 20, threshold: 10)
-      @bulk_discount_3 = @merchant_2.bulk_discounts.create!(name: "Discount 3", discount: 30, threshold: 15)
-      @bulk_discount_4 = @merchant_2.bulk_discounts.create!(name: "Discount 4", discount: 40, threshold: 20)
+  @bulk_discount_2 = @merchant_1.bulk_discounts.create!(name: "Discount 2", discount: 20, threshold: 10)
+  @bulk_discount_3 = @merchant_2.bulk_discounts.create!(name: "Discount 3", discount: 30, threshold: 15)
+  @bulk_discount_4 = @merchant_2.bulk_discounts.create!(name: "Discount 4", discount: 40, threshold: 20)
+
+  HolidayBuilder.make_holidays

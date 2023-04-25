@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_21_022927) do
+ActiveRecord::Schema.define(version: 2023_04_25_165851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,11 @@ ActiveRecord::Schema.define(version: 2023_04_21_022927) do
     t.string "city"
     t.string "state"
     t.bigint "zip"
+  end
+
+  create_table "holidays", force: :cascade do |t|
+    t.string "name"
+    t.date "date"
   end
 
   create_table "invoice_items", force: :cascade do |t|
