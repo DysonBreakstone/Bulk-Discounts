@@ -1,5 +1,7 @@
 class BulkDiscount < ApplicationRecord
   belongs_to :merchant
+  has_many :holiday_bulk_discounts
+  has_many :holidays, through: :holiday_bulk_discounts
 
   validates_presence_of :name
   validates_presence_of :merchant_id

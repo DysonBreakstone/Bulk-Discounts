@@ -4,6 +4,7 @@ class BulkDiscountsController < ApplicationController
   end
 
   def new
+    @holiday = Holiday.find(params[:holiday_id]) if !params[:holiday_id].nil?
     @merchant = Merchant.find(params[:merchant_id])
     @bulk_discount = @merchant.bulk_discounts.new
   end
@@ -13,6 +14,7 @@ class BulkDiscountsController < ApplicationController
     @new_discount = @merchant.bulk_discounts.new(discount_params)
     if @new_discount.save
       flash[:alert] = "New Discount Created!"
+      @new_discount.holiday_bulk_discounts.create(holiday_id: params[:bulk_discount][:holiday_id])
       redirect_to merchant_bulk_discounts_path(Merchant.find(params[:merchant_id]))
     else
       flash[:alert] = "Please fill out all fields correctly"

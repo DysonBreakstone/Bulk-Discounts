@@ -1,0 +1,10 @@
+<%= form_with model: model, url: url, method: method, local: true do |form| %>
+  <%= form.hidden_field :holiday_id, value: @holiday.id %>
+  <%= form.label :name %>
+  <%= form.text_field :name, :value => "#{@holiday.name} Discount" %><br/>
+  <%= form.label :threshold %>
+  <%= form.number_field :threshold, value: 2 %><br/>
+  <%= form.label :discount %>
+  <%= form.number_field :discount, value: 30 %><br/>
+  <%= form.submit %>
+<% end %>

@@ -1,2 +1,6 @@
 <h2>Enter Discount Information</h2>
-<%= render partial: "form", locals: { method: :post, url: merchant_bulk_discounts_path(@bulk_discount.merchant), local: true, model: @bulk_discount }%>
+<% if @holiday.nil? %>
+  <%= render partial: "form", locals: { method: :post, url: merchant_bulk_discounts_path(@bulk_discount.merchant), local: true, model: @bulk_discount }%>
+<% else %>
+  <%= render partial: "holiday_new_form", locals: { method: :post, url: merchant_bulk_discounts_path(@bulk_discount.merchant), local: true, model: @bulk_discount } %>
+<% end %>
