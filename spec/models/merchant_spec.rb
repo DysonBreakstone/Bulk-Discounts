@@ -86,6 +86,9 @@ describe Merchant do
 ##    this test returns a different result every time you run the test. Coverage
 ##    is only like 87% without it so I can't skip it but this failure is
 ##    not my fault!
+
+##    If you run it again it will probably pass
+
       actual = Merchant.top_merchants.map do |result|
         result.name
       end

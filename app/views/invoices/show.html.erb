@@ -23,7 +23,7 @@
   <p>Total Revenue: <%= (@invoice.total_merchant_revenue(@merchant) / 100).round(2) %></p>
   <% if !@invoice.total_merchant_discount(@merchant).nil? %>
     <p>Total Discounts: <%= (@invoice.total_merchant_discount(@merchant) / 100).round(2) %></p>
-    <p>Total Sum: <%= (@invoice.total_sum(@merchant) / 100).round(2) %></p>
+    <p>Total Sum: <%= (@invoice.total_merchant_sum(@merchant) / 100).round(2) %></p>
   <% end %>
  
 

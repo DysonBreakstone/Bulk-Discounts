@@ -26,6 +26,14 @@ RSpec.describe Invoice, type: :model do
   end
 
   describe "bulk discounts instance methods" do
+
+    it "no discounts" do
+      test_data
+      expect(@invoice_1.total_admin_discount).to eq(0)
+      expect(@invoice_2.total_admin_discount).to eq(0)
+      expect(@invoice_3.total_merchant_discount(@merchant_2)).to eq(0)
+      expect(@invoice_4.total_merchant_discount(@merchant_2)).to eq(0)
+    end
     before do
       test_data
       @bulk_discount_1 = @merchant_1.bulk_discounts.create!(name: "Discount 1", discount: 10, threshold: 5)
@@ -36,9 +44,9 @@ RSpec.describe Invoice, type: :model do
 
     it "#total_merchant_discount" do
       expect(@invoice_1.total_merchant_discount(@merchant_1)).to eq(250.0)
-      expect(@invoice_2.total_merchant_discount(@merchant_1)).to eq(4300.0)
+      expect(@invoice_2.total_merchant_discount(@merchant_1)).to eq(15200.0)
       expect(@invoice_4.total_merchant_discount(@merchant_2)).to eq(52900.0)
-      expect(@invoice_4.total_merchant_discount(@merchant_1)).to eq(nil)
+      expect(@invoice_4.total_merchant_discount(@merchant_1)).to eq(0)
     end
 
     it "#this_merchant" do
@@ -58,9 +66,20 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_3.total_merchant_revenue(@merchant_2)).to eq(85500.0)
     end
 
-    it "#total_sum" do
-      expect(@invoice_1.total_sum(@merchant_1)).to eq(5250.0)
-      expect(@invoice_3.total_sum(@merchant_2)).to eq(78750.0)
+    it "#total_merchant_sum" do
+      expect(@invoice_1.total_merchant_sum(@merchant_1)).to eq(5250.0)
+      expect(@invoice_3.total_merchant_sum(@merchant_2)).to eq(78750.0)
+    end
+
+    it "#total_admin_sum" do
+      expect(@invoice_1.total_admin_sum).to eq(77200.0)
+      expect(@invoice_4.total_merchant_sum(@merchant_2)).to eq(110100.0)
+      expect(@invoice_4.total_admin_sum).to eq(110100.0)
+
+      @invoice_item_26 = @invoice_4.invoice_items.create!(item: @item_1, quantity: 20, unit_price: 100, status: 1)
+
+      expect(@invoice_4.total_merchant_sum(@merchant_2)).to eq(110100.0)
+      expect(@invoice_4.total_admin_sum).to eq(111700.0)
     end
   end
 end
