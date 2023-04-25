@@ -109,7 +109,6 @@ RSpec.describe "index page", type: :feature do
 
     it "displays next three holidays" do
       visit merchant_bulk_discounts_path(@merchant_2)
-      save_and_open_page
 
       within("#holidays") do
         expect(page).to have_content("Upcoming Holidays:")
@@ -126,6 +125,43 @@ RSpec.describe "index page", type: :feature do
         expect(page).to have_content("Tue, 04 Jul 2023")
         end
       end
+    end
+  end
+
+  describe "holiday discount extension" do
+    before do 
+      test_data
+      HolidayBuilder.make_holidays
+    end
+
+    it "has buttons next to holidays" do
+      visit merchant_bulk_discounts_path(@merchant_1)
+      expect(page.all(:link, "Create Discount").count).to eq(3)
+    end
+    
+    it "clicking button brings you to new form with pre-populated fields" do
+      visit merchant_bulk_discounts_path(@merchant_1)
+      click_link "holiday_discount#{Holiday.next_three.first.id}"
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+
+      expect(page).to have_field("Name", with: "#{Holiday.next_three.first.name} Discount")
+      expect(page).to have_field("Threshold", with: 2)
+      expect(page).to have_field("Discount", with: 30)
+      click_button "Create Bulk discount"
+
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+
+      expect(page).to have_link("#{Holiday.next_three.first.name} Discount")
+    end
+
+    it "button disappears after creating discount" do
+      visit merchant_bulk_discounts_path(@merchant_1)
+
+      click_link "holiday_discount#{Holiday.next_three.first.id}"
+      click_button "Create Bulk discount"
+
+      expect(page.all(:link, "Create Discount").count).to eq(2)
     end
   end
 end

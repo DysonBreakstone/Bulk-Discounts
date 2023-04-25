@@ -6,6 +6,11 @@ RSpec.describe Holiday, type: :model do
     it { should validate_presence_of :date }
   end
 
+  describe "relationships" do
+    it { should have_many :holiday_bulk_discounts }
+    it { should have_many(:bulk_discounts).through(:holiday_bulk_discounts)}
+  end
+
   describe "class methods" do
     before do
       HolidayBuilder.make_holidays
