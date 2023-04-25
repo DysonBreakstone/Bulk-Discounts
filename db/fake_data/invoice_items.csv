@@ -9,3 +9,4 @@ id,item_id,invoice_id,quantity,unit_price,status,created_at,updated_at
 8,8,1,20,800,shipped,2012-03-27 14:54:09 UTC,2012-03-27 14:54:09 UTC
 9,9,1,25,900,shipped,2012-03-27 14:54:09 UTC,2012-03-27 14:54:09 UTC
 10,10,1,25,1000,shipped,2012-03-27 14:54:09 UTC,2012-03-27 14:54:09 UTC
+11,11,1,30,1100,shipped,2012-03-27 14:54:09 UTC,2012-03-27 14:54:09 UTC

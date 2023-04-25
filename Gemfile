@@ -15,6 +15,7 @@ gem 'puma', '~> 3.11'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
+gem 'hirb'
 
 # Use CoffeeScript for .coffee assets and views
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -57,3 +58,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# InvoiceItem.joins(invoice:  {merchants: :bulk_discounts}).select("invoice_items.id, invoice_items.quantity, invoice_items.unit_price, bulk_discounts.discount").where("invoice_items.quantity >= bulk_discounts.threshold").distinct
