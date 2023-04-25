@@ -130,6 +130,60 @@ RSpec.describe 'invoices show' do
       expect(page).to have_content("Total Discounts: 529.0")
       expect(page).to have_content("Total Sum: 1101.0")
     end
+
+    it "shows link to discount next to item" do
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
+
+      within("#the-status-#{@invoice_item_5.id}") do
+        expect(page).to have_link("Discount 1", href: merchant_bulk_discount_path(@merchant_1, @bulk_discount_1))
+      end
+
+      visit merchant_invoice_path(@merchant_1, @invoice_2)
+
+      within("#the-status-#{@invoice_item_6.id}") do
+        expect(page).to have_link("Discount 1", href: merchant_bulk_discount_path(@merchant_1, @bulk_discount_1))
+      end
+      within("#the-status-#{@invoice_item_7.id}") do
+        expect(page).to have_link("Discount 1", href: merchant_bulk_discount_path(@merchant_1, @bulk_discount_1))
+      end
+      within("#the-status-#{@invoice_item_8.id}") do
+        expect(page).to have_link("Discount 1", href: merchant_bulk_discount_path(@merchant_1, @bulk_discount_1))
+      end
+      within("#the-status-#{@invoice_item_9.id}") do
+        expect(page).to have_link("Discount 1", href: merchant_bulk_discount_path(@merchant_1, @bulk_discount_1))
+      end
+      within("#the-status-#{@invoice_item_10.id}") do
+        expect(page).to have_link("Discount 2", href: merchant_bulk_discount_path(@merchant_1, @bulk_discount_2))
+      end
+
+      visit merchant_invoice_path(@merchant_2, @invoice_3)
+
+      within("#the-status-#{@invoice_item_15.id}") do
+        expect(page).to have_link("Discount 3", href: merchant_bulk_discount_path(@merchant_2, @bulk_discount_3))
+      end
+
+      visit merchant_invoice_path(@merchant_2, @invoice_4)
+
+      within("#the-status-#{@invoice_item_16.id}") do
+        expect(page).to have_link("Discount 3", href: merchant_bulk_discount_path(@merchant_2, @bulk_discount_3))
+      end
+
+      within("#the-status-#{@invoice_item_17.id}") do
+        expect(page).to have_link("Discount 3", href: merchant_bulk_discount_path(@merchant_2, @bulk_discount_3))
+      end
+
+      within("#the-status-#{@invoice_item_18.id}") do
+        expect(page).to have_link("Discount 3", href: merchant_bulk_discount_path(@merchant_2, @bulk_discount_3))
+      end
+
+      within("#the-status-#{@invoice_item_19.id}") do
+        expect(page).to have_link("Discount 3", href: merchant_bulk_discount_path(@merchant_2, @bulk_discount_3))
+      end
+
+      within("#the-status-#{@invoice_item_20.id}") do
+        expect(page).to have_link("Discount 4", href: merchant_bulk_discount_path(@merchant_2, @bulk_discount_4))
+      end
+    end
   end
 
 end

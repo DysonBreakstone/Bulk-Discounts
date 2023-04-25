@@ -39,4 +39,29 @@ RSpec.describe InvoiceItem, type: :model do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
     end
   end
+
+  describe "insance methods" do
+    before do
+      test_data
+      @bulk_discount_1 = @merchant_1.bulk_discounts.create!(name: "Discount 1", discount: 10, threshold: 5)
+      @bulk_discount_2 = @merchant_1.bulk_discounts.create!(name: "Discount 2", discount: 20, threshold: 10)
+      @bulk_discount_3 = @merchant_2.bulk_discounts.create!(name: "Discount 3", discount: 30, threshold: 15)
+      @bulk_discount_4 = @merchant_2.bulk_discounts.create!(name: "Discount 4", discount: 40, threshold: 20)
+    end
+
+    it "#best_discount" do
+      expect(@invoice_item_5.best_discount).to eq(@bulk_discount_1)
+      expect(@invoice_item_6.best_discount).to eq(@bulk_discount_1)
+      expect(@invoice_item_7.best_discount).to eq(@bulk_discount_1)
+      expect(@invoice_item_8.best_discount).to eq(@bulk_discount_1)
+      expect(@invoice_item_9.best_discount).to eq(@bulk_discount_1)
+      expect(@invoice_item_10.best_discount).to eq(@bulk_discount_2)
+      expect(@invoice_item_15.best_discount).to eq(@bulk_discount_3)
+      expect(@invoice_item_16.best_discount).to eq(@bulk_discount_3)
+      expect(@invoice_item_17.best_discount).to eq(@bulk_discount_3)
+      expect(@invoice_item_18.best_discount).to eq(@bulk_discount_3)
+      expect(@invoice_item_19.best_discount).to eq(@bulk_discount_3)
+      expect(@invoice_item_20.best_discount).to eq(@bulk_discount_4)
+    end
+  end
 end
