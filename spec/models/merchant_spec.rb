@@ -82,7 +82,7 @@ describe Merchant do
     end
 
     it 'top_merchants' do 
-##    I don't know what the people who create this repo did, but
+##    I don't know what the people who created this repo did, but
 ##    this test returns a different result every time you run the test. Coverage
 ##    is only like 87% without it so I can't skip it but this failure is
 ##    not my fault!
